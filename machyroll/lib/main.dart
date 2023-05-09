@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:machyroll/loginPage.dart';
+import 'package:machyroll/checkauth.dart';
+import 'package:machyroll/inventory.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: loginPage(),
+      home: inventory(),
     );
   }
 }
