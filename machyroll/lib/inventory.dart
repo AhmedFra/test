@@ -84,7 +84,12 @@ class _inventoryState extends State<inventory> {
                             itemBuilder: (context, index) {
                               return itemDisplay(
                                   //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
-                                  );
+                                  "Demon Slayer The Movie: Mugen Train - Akaza Figure",
+                                  "Size approx: 9” inches tall",
+                                  "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
+                                  20.00,
+                                  29.99,
+                                  "in Stock");
                             });
                       }))
             ]),
@@ -96,10 +101,23 @@ class _inventoryState extends State<inventory> {
 }
 
 Widget itemDisplay(String title, String description, String imageUrl,
-    Float price, Float sold, String state) {
+    double price, double sold, String state) {
   return Row(
     children: [
-      //  Image.network(item.image_url)
+      SizedBox(
+        width: 50,
+        height: 50,
+        child: Image.network(imageUrl),
+      ),
+      Column(
+        children: [
+          Text(title),
+          Text(description),
+          Text(price.toString()),
+          Text(sold.toString()),
+          Text(state)
+        ],
+      )
     ],
   );
 }
