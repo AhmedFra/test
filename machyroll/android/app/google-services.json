@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946730871227",
+    "project_id": "machyroll-93120",
+    "storage_bucket": "machyroll-93120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946730871227:android:2fe7ace8112ff7381c3c9e",
+        "android_client_info": {
+          "package_name": "com.example.machyroll"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946730871227-7to2dvodipshfl35qr4uljn808ih546v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpuR5eQ-Jffj4SZfXqWBborZeYQ5CsHNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946730871227-7to2dvodipshfl35qr4uljn808ih546v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
