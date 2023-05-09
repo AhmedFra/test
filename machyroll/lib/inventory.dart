@@ -80,11 +80,11 @@ class _inventoryState extends State<inventory> {
                       future: getItemsIds(),
                       builder: (context, snapshot) {
                         return ListView.builder(
-                            itemCount: items.length,
+                            itemCount: 3,
                             itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(items[index]),
-                              );
+                              return itemDisplay(
+                                  //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
+                                  );
                             });
                       }))
             ]),
@@ -95,11 +95,8 @@ class _inventoryState extends State<inventory> {
   }
 }
 
-Widget itemDisplay(
-  String item,
-  String image_url,
-  Float price,
-) {
+Widget itemDisplay(String title, String description, String imageUrl,
+    Float price, Float sold, String state) {
   return Row(
     children: [
       //  Image.network(item.image_url)
