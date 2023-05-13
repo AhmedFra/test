@@ -9,14 +9,11 @@ class FiguierPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 25, 24, 28),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 25, 24, 28),
         leading:Container(
-          padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(30)
-                                ),
+          
                                 child: Icon(
                                   Icons.arrow_back_ios_new,
                                   size: 22,

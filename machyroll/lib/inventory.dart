@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
 // ignore: camel_case_types
 class inventory extends StatefulWidget {
   const inventory({Key? key}) : super(key: key);
@@ -14,6 +13,8 @@ class inventory extends StatefulWidget {
 
 // ignore: camel_case_types
 class _inventoryState extends State<inventory> {
+  bool _isSearching = false;
+
   TextStyle linkStyle = const TextStyle(color: Colors.grey, fontSize: 20.0);
   List<String> items = [];
 
@@ -48,58 +49,98 @@ class _inventoryState extends State<inventory> {
           height: double.infinity,
         ),
         Scaffold(
-          backgroundColor:Color(0xff232227),
+          backgroundColor: const Color.fromARGB(255, 25, 24, 28),
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(186, 8, 8, 8),
+            backgroundColor: const Color.fromARGB(255, 25, 24, 28),
             elevation: 0,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Icon(Icons.local_fire_department_sharp),
-                Text("My recommendation"),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Icon(
-                      Icons.search_rounded,
-                      size: 24,
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(onPressed: () {
+                  
+                    },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 25, 24, 28)),
+                            ),
+                     child: Icon(
+                      Icons.sort_rounded,
+                      color: Colors.white,
+                      size: 35,
+                     )),
+                      Expanded(
+                        child: Align(
+                        alignment: Alignment.topRight,
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          width: _isSearching ? MediaQuery.of(context).size.width * 0.6 : 0,
+                          child: _isSearching
+                          ? TextField(
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              hintText: 'Search',
+                              hintStyle: TextStyle(color: Colors.white),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Color.fromARGB(255, 25, 24, 28)),
+                                         ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Color.fromARGB(255, 25, 24, 28)),
+                                      ),
+                                  ),
+                            onChanged: (value) {
+                      // Perform search operation here
+                        },
+                       )
+                      : null,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                             ),
+                                IconButton(
+                                   onPressed: () {
+                                     setState(() {
+                                       _isSearching = !_isSearching;
+                                        });
+                                          },
+                                  icon: Icon(
+                                   Icons.search,
+                                   color: Colors.white,
+                                      size: 35,
+                                          ),
+      
+                    ),
+                  ],
             ),
           ),
           body: Center(
-            child: SafeArea(
-              child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                // ignore: prefer_const_constructors
-                SizedBox(
-                  height: 60,
-                ),
-                Expanded(
-                    child: FutureBuilder(
-                        future: getItemsIds(),
-                        builder: (context, snapshot) {
-                          return ListView.builder(
-                              itemCount: 3,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    itemDisplay(
-                                        //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
-                                        "Demon Slayer The Movie: Mugen Train - Akaza Figure",
-                                        "Size approx: 9” inches tall",
-                                        "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
-                                        20.00,
-                                        29.99,
-                                        "in Stock"),
-                                        SizedBox(height: 20,)
-                                  ],
-                                );
-                              });
-                        }))
-              ]),
-            ),
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              // ignore: prefer_const_constructors
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                  child: FutureBuilder(
+                      future: getItemsIds(),
+                      builder: (context, snapshot) {
+                        return ListView.builder(
+                            itemCount: 3,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  itemDisplay(
+                                      //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
+                                      "Demon Slayer The Movie: Mugen Train - Akaza Figure",
+                                      "Size approx: 9” inches tall",
+                                      "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
+                                      20.00,
+                                      29.99,
+                                      "in Stock"),
+                                  const SizedBox(
+                                    height: 0,
+                                  )
+                                ],
+                              );
+                            });
+                      }))
+            ]),
           ),
         ),
       ],
@@ -110,65 +151,98 @@ class _inventoryState extends State<inventory> {
 Widget itemDisplay(String title, String description, String imageUrl,
     double price, double sold, String state) {
   return Container(
-    color: Colors.white,
-    child: Row(
-      children: [
-        SizedBox(
-          width: 130,
-          height: 130,
-          child: Image.network(imageUrl),
-          ),
-          
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    color: const Color.fromARGB(0, 255, 255, 255),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Text(title,style: TextStyle(fontSize: 17),),
-              Text(description),
-               RatingBar.builder(
-                initialRating: 3.5,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemSize: 20.0,
-                itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
+              SizedBox(
+                width: 130,
+                height: 130,
+                child: Image.network(imageUrl),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.white),
+                      ),
+                      Text(
+                        description,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.white),
+                      ),
+                      RatingBar.builder(
+                        initialRating: 3.5,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 20.0,
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 2.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+                      Row(
+                        children: [
+                          Text(price.toString(),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.green)),
+                          const SizedBox(width: 10),
+                          Text(sold.toString(),
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.red,
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationThickness: 2.0)),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 255, 163, 59),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0, vertical: 2.0),
+                            child: Text(
+                              state,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 237, 222, 222),
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
               ),
-              Row(
-                children: [
-                  Text(price.toString(),style: TextStyle(fontSize: 16,color: Colors.green)),
-                  SizedBox(width: 10),
-                  Text(sold.toString(),style: TextStyle(fontSize: 16,color: Colors.red,decoration: TextDecoration.lineThrough,decorationThickness: 2.0)),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 163, 59),
-                      borderRadius: BorderRadius.circular(5.0),
-                     ),
-                    
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
-                      child: Text(state,style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 12.0,
-                      ),),
-                    ),
-                ],
-              ),
-              
             ],
           ),
-        )
-      ],
+          SizedBox(
+            height: 20,
+          ),
+          const Divider(
+            color: Colors.white,
+          )
+        ],
+      ),
     ),
   );
 }
