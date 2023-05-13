@@ -56,9 +56,7 @@ class FiguierPage extends StatelessWidget {
                     
                       
                   );
-                  InkWell(
-
-                  )
+                
                 }).toList(),
                 
               ),
@@ -73,29 +71,36 @@ class FiguierPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "\£29",
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.red,
+                    Flexible(
+                      child: Text(
+                        "Demon Slayer The Movie: Mugen Train - Akaza Figure",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromARGB(255, 46, 46, 46),
+                        ),
+                        
                       ),
+                      
                     ),
                     InkWell(
                       onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.only(bottom: 15),
+                        padding: EdgeInsets.symmetric(vertical: 18,horizontal: 70),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(30)
                         ),
-                        child: Icon(
-                          CupertinoIcons.car_fill,
-                          size :22,
-                          color: Colors.red,
+                        child: Text("\$29",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromARGB(255, 228, 39, 39),)
                         ),
+                        
                       ),
                     )
+                    
                   ],
                 ),)
               ],
