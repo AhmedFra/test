@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:machyroll/Figuier_Page.dart';
 
 // ignore: camel_case_types
 class inventory extends StatefulWidget {
@@ -16,24 +17,27 @@ class _inventoryState extends State<inventory> {
   bool _isSearching = false;
 
   TextStyle linkStyle = const TextStyle(color: Colors.grey, fontSize: 20.0);
-  List<String> items = [];
-
+  List<dynamic> itemsData = [];
+  List<dynamic> itemsIds = [];
   //fetch data
   Future getItemsIds() async {
+    itemsData = [];
+    itemsIds = [];
     await FirebaseFirestore.instance
         .collection("figures")
         .get()
         .then((snapshot) => {
               snapshot.docs.forEach((doc) {
                 print(doc.reference.id);
-                items.add(doc.reference.id);
+                print(snapshot.docs.length);
+                itemsData.add(doc.data());
+                itemsIds.add(doc.reference.id);
               })
             });
   }
 
   @override
   void initState() {
-    getItemsIds();
     super.initState();
   }
 
@@ -54,60 +58,63 @@ class _inventoryState extends State<inventory> {
             backgroundColor: const Color.fromARGB(255, 25, 24, 28),
             elevation: 0,
             title: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(onPressed: () {
-                  
-                    },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 25, 24, 28)),
-                            ),
-                     child: Icon(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 25, 24, 28)),
+                    ),
+                    child: const Icon(
                       Icons.sort_rounded,
                       color: Colors.white,
                       size: 35,
-                     )),
-                      Expanded(
-                        child: Align(
-                        alignment: Alignment.topRight,
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
-                          width: _isSearching ? MediaQuery.of(context).size.width * 0.6 : 0,
-                          child: _isSearching
+                    )),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      width: _isSearching
+                          ? MediaQuery.of(context).size.width * 0.6
+                          : 0,
+                      child: _isSearching
                           ? TextField(
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              hintText: 'Search',
-                              hintStyle: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                hintText: 'Search',
+                                hintStyle: TextStyle(color: Colors.white),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Color.fromARGB(255, 25, 24, 28)),
-                                         ),
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 25, 24, 28)),
+                                ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Color.fromARGB(255, 25, 24, 28)),
-                                      ),
-                                  ),
-                            onChanged: (value) {
-                      // Perform search operation here
-                        },
-                       )
-                      : null,
-                      ),
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 25, 24, 28)),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                // Perform search operation here
+                              },
+                            )
+                          : null,
                     ),
-                             ),
-                                IconButton(
-                                   onPressed: () {
-                                     setState(() {
-                                       _isSearching = !_isSearching;
-                                        });
-                                          },
-                                  icon: Icon(
-                                   Icons.search,
-                                   color: Colors.white,
-                                      size: 35,
-                                          ),
-      
-                    ),
-                  ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _isSearching = !_isSearching;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                ),
+              ],
             ),
           ),
           body: Center(
@@ -121,18 +128,27 @@ class _inventoryState extends State<inventory> {
                       future: getItemsIds(),
                       builder: (context, snapshot) {
                         return ListView.builder(
-                            itemCount: 3,
+                            itemCount: itemsIds.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
-                                  itemDisplay(
-                                      //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
-                                      "Demon Slayer The Movie: Mugen Train - Akaza Figure",
-                                      "Size approx: 9” inches tall",
-                                      "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
-                                      20.00,
-                                      29.99,
-                                      "in Stock"),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => FiguierPage(
+                                                  itemsIds[index])));
+                                    },
+                                    child: itemDisplay(
+                                        //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
+                                        itemsData[index]["title"],
+                                        itemsData[index]["description"],
+                                        itemsData[index]["imageUrl"],
+                                        itemsData[index]["price"].toDouble(),
+                                        itemsData[index]["sold"].toDouble(),
+                                        itemsData[index]["state"]),
+                                  ),
                                   const SizedBox(
                                     height: 0,
                                   )
@@ -235,7 +251,7 @@ Widget itemDisplay(String title, String description, String imageUrl,
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           const Divider(
