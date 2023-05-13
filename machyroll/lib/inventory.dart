@@ -82,14 +82,21 @@ class _inventoryState extends State<inventory> {
                         return ListView.builder(
                             itemCount: 3,
                             itemBuilder: (context, index) {
-                              return itemDisplay(
-                                  //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
-                                  "Demon Slayer The Movie: Mugen Train - Akaza Figure",
-                                  "Size approx: 9” inches tall",
-                                  "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
-                                  20.00,
-                                  29.99,
-                                  "in Stock");
+                              return Column(
+                                children: [
+                                  itemDisplay(
+                                      //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
+                                      "Demon Slayer The Movie: Mugen Train - Akaza Figure",
+                                      "Size approx: 9” inches tall",
+                                      "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
+                                      20.00,
+                                      29.99,
+                                      "in Stock"),
+                                  const SizedBox(
+                                    height: 20,
+                                  )
+                                ],
+                              );
                             });
                       }))
             ]),
@@ -115,7 +122,7 @@ Widget itemDisplay(String title, String description, String imageUrl,
           Text(description),
           Text(price.toString()),
           Text(sold.toString()),
-          Text(state)
+          Text(state),
         ],
       )
     ],
