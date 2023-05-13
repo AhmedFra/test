@@ -48,7 +48,7 @@ class _inventoryState extends State<inventory> {
           height: double.infinity,
         ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor:Color(0xff232227),
           appBar: AppBar(
             backgroundColor: Color.fromARGB(186, 8, 8, 8),
             elevation: 0,
@@ -70,34 +70,36 @@ class _inventoryState extends State<inventory> {
             ),
           ),
           body: Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              // ignore: prefer_const_constructors
-              SizedBox(
-                height: 60,
-              ),
-              Expanded(
-                  child: FutureBuilder(
-                      future: getItemsIds(),
-                      builder: (context, snapshot) {
-                        return ListView.builder(
-                            itemCount: 3,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  itemDisplay(
-                                      //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
-                                      "Demon Slayer The Movie: Mugen Train - Akaza Figure",
-                                      "Size approx: 9” inches tall",
-                                      "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
-                                      20.00,
-                                      29.99,
-                                      "in Stock"),
-                                      SizedBox(height: 20,)
-                                ],
-                              );
-                            });
-                      }))
-            ]),
+            child: SafeArea(
+              child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                // ignore: prefer_const_constructors
+                SizedBox(
+                  height: 60,
+                ),
+                Expanded(
+                    child: FutureBuilder(
+                        future: getItemsIds(),
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    itemDisplay(
+                                        //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
+                                        "Demon Slayer The Movie: Mugen Train - Akaza Figure",
+                                        "Size approx: 9” inches tall",
+                                        "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwbd5b458b/images/6610071781420-1-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634693271596.jpg",
+                                        20.00,
+                                        29.99,
+                                        "in Stock"),
+                                        SizedBox(height: 20,)
+                                  ],
+                                );
+                              });
+                        }))
+              ]),
+            ),
           ),
         ),
       ],
