@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -29,7 +30,7 @@ class _inventoryState extends State<inventory> {
         .then((snapshot) => {
               snapshot.docs.forEach((doc) {
                 print(doc.reference.id);
-                print(snapshot.docs.length);
+                print(doc.data()["rating"].toString());
                 itemsData.add(doc.data());
                 itemsIds.add(doc.reference.id);
               })
@@ -66,10 +67,15 @@ class _inventoryState extends State<inventory> {
                       backgroundColor: MaterialStateProperty.all<Color>(
                           const Color.fromARGB(255, 25, 24, 28)),
                     ),
-                    child: const Icon(
-                      Icons.sort_rounded,
-                      color: Colors.white,
-                      size: 35,
+                    child: InkWell(
+                      onTap: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                      child: const Icon(
+                        Icons.sort_rounded,
+                        color: Colors.white,
+                        size: 35,
+                      ),
                     )),
                 Expanded(
                   child: Align(

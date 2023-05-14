@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:machyroll/inventory.dart';
 import 'login.dart';
 import 'starting.dart';
 
@@ -13,7 +14,7 @@ class checkauth extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const starting();
+              return const inventory();
             } else {
               return const loginPage();
             }

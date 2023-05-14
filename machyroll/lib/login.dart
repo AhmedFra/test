@@ -12,6 +12,7 @@ class loginPage extends StatefulWidget {
 
 class _LoginPageState extends State<loginPage> {
   final _formKey = GlobalKey<FormState>();
+  String err = "loggin in";
   @override
   Widget build(BuildContext context) {
     TextEditingController useranameController = TextEditingController();
@@ -73,6 +74,18 @@ class _LoginPageState extends State<loginPage> {
                                     border: InputBorder.none,
                                     labelText: 'password',
                                   ),
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.isEmpty ||
+                                        value == "") {
+                                      err = 'Please enter a password.';
+                                    }
+                                    if (value!.length < 8) {
+                                      err =
+                                          'Password must be at least 6 characters long.';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                             )),
@@ -82,8 +95,7 @@ class _LoginPageState extends State<loginPage> {
                             if (_formKey.currentState!.validate()) {
                               login();
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('works lets gooooo')),
+                                SnackBar(content: Text(err)),
                               );
                             }
                           },

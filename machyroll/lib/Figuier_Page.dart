@@ -3,17 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:machyroll/inventory.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class FiguierPage extends StatelessWidget {
-  String id;
-  dynamic data;
-  FiguierPage(this.id, {Key? key}) : super(key: key);
+class FiguierPage extends StatefulWidget {
+  final String id;
+
+  const FiguierPage(this.id, {Key? key}) : super(key: key);
+
+  @override
+  _FiguierPageState createState() => _FiguierPageState();
+}
+
+class _FiguierPageState extends State<FiguierPage> {
+  int quantity = 0;
+  late dynamic data;
+  CollectionReference figure = FirebaseFirestore.instance.collection('figures');
+  Future loadData() async {
+    return figure.doc(widget.id).get();
+  }
+
   @override
   Widget build(BuildContext context) {
-    CollectionReference figure =
-        FirebaseFirestore.instance.collection('figures');
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -28,7 +38,7 @@ class FiguierPage extends StatelessWidget {
         ),
       ),
       body: FutureBuilder(
-          future: figure.doc(id).get(),
+          future: loadData(),
           builder: (context, snapshot) {
             data = snapshot.data!.data() as Map<String, dynamic>;
             return SafeArea(
@@ -100,35 +110,53 @@ class FiguierPage extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(0.1),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (quantity > 1) {
+                                            setState(() {
+                                              quantity--;
+                                            });
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(0.1),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child:
+                                              const Icon(CupertinoIcons.minus),
                                         ),
-                                        child: const Icon(CupertinoIcons.minus),
                                       ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
                                             horizontal: 10),
-                                        child: const Text(
-                                          "01",
-                                          style: TextStyle(
+                                        child: Text(
+                                          quantity.toString(),
+                                          style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        padding: const EdgeInsets.all(0.1),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            quantity++;
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(0.1),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child:
+                                              const Icon(CupertinoIcons.plus),
                                         ),
-                                        child: const Icon(CupertinoIcons.plus),
                                       ),
                                     ],
                                   )
@@ -210,17 +238,17 @@ class FiguierPage extends StatelessWidget {
                                           height: 15,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             Text(
-                                              "\$15.00",
-                                              style: TextStyle(
+                                              "\$${data['price']}",
+                                              style: const TextStyle(
                                                   color: Color.fromARGB(
                                                       255, 243, 161, 39),
                                                   fontSize: 30),
                                             ),
-                                            SizedBox(width: 10),
-                                            Text("\$29.99",
-                                                style: TextStyle(
+                                            const SizedBox(width: 10),
+                                            Text("\$${data['sold']}",
+                                                style: const TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.red,
                                                     decoration: TextDecoration
@@ -237,6 +265,114 @@ class FiguierPage extends StatelessWidget {
                                         )
                                       ],
                                     ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Center(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          // Button 1 onPressed action
+                                          _openMaps();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 70),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: const Color.fromARGB(
+                                              207, 54, 200, 244),
+                                        ),
+                                        child: const Text(
+                                          ' location  ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Center(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          // Button 2 onPressed action
+                                          _sendEmail();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 70),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: Colors.red,
+                                        ),
+                                        child: const Text(
+                                          'E-mail',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Center(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          // Button 3 onPressed action
+                                          launchTel();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 70),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: Colors.green,
+                                        ),
+                                        child: const Text(
+                                          'Phone',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Center(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          // Button 4 onPressed action
+                                          launchSms();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 70),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: const Color.fromARGB(
+                                              255, 59, 72, 255),
+                                        ),
+                                        child: const Text(
+                                          ' SMS  ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ]),
                             )
                           ],
@@ -249,53 +385,58 @@ class FiguierPage extends StatelessWidget {
             );
           }),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 70,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 44, 43, 43),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "\$15",
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 81, 248, 75)),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 20),
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.add_shopping_cart,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "Add to Cart",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    )),
-              )
-            ],
-          ),
-        ),
+        child: FutureBuilder(
+            future: loadData(),
+            builder: (context, snapshot) {
+              data = snapshot.data!.data() as Map<String, dynamic>;
+              return Container(
+                height: 70,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 44, 43, 43),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "\$${data["price"] * quantity}",
+                      style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 81, 248, 75)),
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.add_shopping_cart,
+                                color: Colors.white,
+                                size: 28,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Add to Cart",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          )),
+                    )
+                  ],
+                ),
+              );
+            }),
       ),
     );
   }
@@ -319,4 +460,57 @@ Widget makeDesc(List desc) {
       );
     },
   );
+}
+
+_sendEmail() async {
+  // Remplacez l'adresse e-mail du destinataire par la vôtre
+  final Uri params = Uri(
+    scheme: 'mailto',
+    path: 'machyroll@yahoo.com',
+  );
+
+  String url = params.toString();
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Impossible d\'ouvrir l\'application de messagerie.';
+  }
+}
+
+dynamic launchTel() async {
+  try {
+    Uri telUri = Uri(
+      scheme: 'tel',
+      path: "+0659717949",
+    );
+    await launchUrl(telUri);
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+dynamic launchSms() async {
+  try {
+    Uri smsUri = Uri(
+      scheme: 'sms',
+      path: "+0659717949",
+    );
+    await launchUrl(smsUri);
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+_openMaps() async {
+  // Remplacez les coordonnées par celles de votre choix
+  final String coords = "el khroub";
+
+  String url = "https://www.google.com/maps/search/?api=1&query=$coords";
+  // ignore: deprecated_member_use
+  if (await canLaunch(url)) {
+    // ignore: deprecated_member_use
+    await launch(url);
+  } else {
+    throw 'Impossible d\'ouvrir l\'application de cartographie.';
+  }
 }
