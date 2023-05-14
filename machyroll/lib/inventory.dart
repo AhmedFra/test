@@ -1,4 +1,6 @@
 import 'dart:ffi';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -102,6 +104,9 @@ class _inventoryState extends State<inventory> {
                                 ),
                               ),
                               onChanged: (value) {
+                                setState(() {
+                                  itemsData = [];
+                                });
                                 // Perform search operation here
                               },
                             )
@@ -124,46 +129,79 @@ class _inventoryState extends State<inventory> {
               ],
             ),
           ),
-          body: Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              // ignore: prefer_const_constructors
-              SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                  child: FutureBuilder(
-                      future: getItemsIds(),
-                      builder: (context, snapshot) {
-                        return ListView.builder(
-                            itemCount: itemsIds.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => FiguierPage(
-                                                  itemsIds[index])));
-                                    },
-                                    child: itemDisplay(
-                                        //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
-                                        itemsData[index]["title"],
-                                        itemsData[index]["description"][0],
-                                        itemsData[index]["imageUrl"],
-                                        itemsData[index]["price"].toDouble(),
-                                        itemsData[index]["sold"].toDouble(),
-                                        itemsData[index]["state"]),
-                                  ),
-                                  const SizedBox(
-                                    height: 0,
-                                  )
-                                ],
-                              );
-                            });
-                      }))
-            ]),
+          body: SafeArea(
+            child: Center(
+              child:
+                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                // ignore: prefer_const_constructors
+                CarouselSlider(
+                  options: CarouselOptions(
+                    height: MediaQuery.of(context).size.height / 3,
+                    viewportFraction: 1.0,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                  ),
+                  items: [
+                    "https://wallpapercave.com/wp/wp8938666.jpg",
+                    "https://e0.pxfuel.com/wallpapers/835/107/desktop-wallpaper-naruto-png-naruto-logo-transparent-transparent-png-logos-naruto-shippuden-logo.jpg",
+                    "https://wallpapercave.com/dwp1x/wp9995092.jpg",
+                    "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dw57a9d791/images/6610071781420-7-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634102693932.jpg",
+                    // Add more image URLs here
+                  ].map((imageUrl) {
+                    return GestureDetector(
+                      onTap: () {
+                        print("working");
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                Expanded(
+                    child: FutureBuilder(
+                        future: getItemsIds(),
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                              itemCount: itemsIds.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FiguierPage(
+                                                        itemsIds[index])));
+                                      },
+                                      child: itemDisplay(
+                                          //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
+                                          itemsData[index]["title"],
+                                          itemsData[index]["description"][0],
+                                          itemsData[index]["imageUrl"],
+                                          itemsData[index]["price"].toDouble(),
+                                          itemsData[index]["sold"].toDouble(),
+                                          itemsData[index]["state"]),
+                                    ),
+                                    const SizedBox(
+                                      height: 0,
+                                    )
+                                  ],
+                                );
+                              });
+                        }))
+              ]),
+            ),
           ),
         ),
       ],
@@ -265,6 +303,26 @@ Widget itemDisplay(String title, String description, String imageUrl,
             color: Colors.white,
           )
         ],
+      ),
+    ),
+  );
+}
+
+Widget filterButtons(String state) {
+  return GestureDetector(
+    onTap: () {},
+    child: Container(
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 255, 163, 59),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+      child: Text(
+        state,
+        style: const TextStyle(
+          color: Color.fromARGB(255, 237, 222, 222),
+          fontSize: 12.0,
+        ),
       ),
     ),
   );
