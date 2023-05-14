@@ -132,7 +132,7 @@ class _inventoryState extends State<inventory> {
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
-                                  GestureDetector(
+                                  InkWell(
                                     onTap: () {
                                       Navigator.push(
                                           context,
@@ -143,7 +143,7 @@ class _inventoryState extends State<inventory> {
                                     child: itemDisplay(
                                         //dakhal les information manually hnaya b tartib t3 al function li mn ta7t b3d
                                         itemsData[index]["title"],
-                                        itemsData[index]["description"],
+                                        itemsData[index]["description"][0],
                                         itemsData[index]["imageUrl"],
                                         itemsData[index]["price"].toDouble(),
                                         itemsData[index]["sold"].toDouble(),
