@@ -56,6 +56,7 @@ class _inventoryState extends State<inventory> {
         Scaffold(
           backgroundColor: const Color.fromARGB(255, 25, 24, 28),
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: const Color.fromARGB(255, 25, 24, 28),
             elevation: 0,
             title: Row(
@@ -83,7 +84,7 @@ class _inventoryState extends State<inventory> {
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       width: _isSearching
-                          ? MediaQuery.of(context).size.width * 0.6
+                          ? MediaQuery.of(context).size.width * 0.5
                           : 0,
                       child: _isSearching
                           ? TextField(

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:machyroll/checkauth.dart';
+import 'package:machyroll/login.dart';
 
 // ignore: camel_case_types
 class starting extends StatefulWidget {
@@ -38,13 +40,21 @@ class _startingState extends State<starting> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                child: const Text(
-                  'Get Started!',
-                  style: TextStyle(
-                    backgroundColor: Colors.transparent,
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const checkauth()));
+                  },
+                  child: const Text(
+                    'Get Started!',
+                    style: TextStyle(
+                      backgroundColor: Colors.transparent,
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
