@@ -18,7 +18,19 @@ class inventory extends StatefulWidget {
 // ignore: camel_case_types
 class _inventoryState extends State<inventory> {
   bool _isSearching = false;
+  List<Map<String, dynamic>> allItemsData = []; // Store all items data here
 
+// Filtered items based on search query
+List<Map<String, dynamic>> filteredItemsData = [];
+
+// Function to perform search operation
+void performSearch(String query) {
+  setState(() {
+    filteredItemsData = allItemsData
+        .where((item) => item['title'].toLowerCase().startsWith(query.toLowerCase()))
+        .toList();
+  });
+}
   TextStyle linkStyle = const TextStyle(color: Colors.grey, fontSize: 20.0);
   List<dynamic> itemsData = [];
   List<dynamic> itemsIds = [];
@@ -104,9 +116,7 @@ class _inventoryState extends State<inventory> {
                                 ),
                               ),
                               onChanged: (value) {
-                                setState(() {
-                                  itemsData = [];
-                                });
+                                performSearch(value);
                                 // Perform search operation here
                               },
                             )
@@ -136,7 +146,7 @@ class _inventoryState extends State<inventory> {
                 // ignore: prefer_const_constructors
                 CarouselSlider(
                   options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height / 3,
+                    height: MediaQuery.of(context).size.height / 4.3,
                     viewportFraction: 1.0,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 3),
@@ -146,9 +156,9 @@ class _inventoryState extends State<inventory> {
                   ),
                   items: [
                     "https://wallpapercave.com/wp/wp8938666.jpg",
-                    "https://e0.pxfuel.com/wallpapers/835/107/desktop-wallpaper-naruto-png-naruto-logo-transparent-transparent-png-logos-naruto-shippuden-logo.jpg",
+                    "https://data.topquizz.com/distant/question/big/0/4/5/6/776540_3a248f0385.jpg",
                     "https://wallpapercave.com/dwp1x/wp9995092.jpg",
-                    "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dw57a9d791/images/6610071781420-7-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634102693932.jpg",
+                    "https://i.ebayimg.com/images/g/Xi4AAOSwEPNgaAbk/s-l500.jpg",
                     // Add more image URLs here
                   ].map((imageUrl) {
                     return GestureDetector(
