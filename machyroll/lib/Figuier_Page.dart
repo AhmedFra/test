@@ -544,7 +544,7 @@ class _FiguierPageState extends State<FiguierPage> {
                 height: 70,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 44, 43, 43),
+                  color: Color.fromARGB(255, 25, 24, 28),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
