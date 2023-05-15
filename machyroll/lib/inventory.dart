@@ -87,9 +87,9 @@ void performSearch(String query) {
                         FirebaseAuth.instance.signOut();
                       },
                       child: const Icon(
-                        Icons.sort_rounded,
+                        Icons.logout,
                         color: Colors.white,
-                        size: 35,
+                        size: 30,
                       ),
                     )),
                 Expanded(
