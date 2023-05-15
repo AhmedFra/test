@@ -75,9 +75,9 @@ class _inventoryState extends State<inventory> {
                         FirebaseAuth.instance.signOut();
                       },
                       child: const Icon(
-                        Icons.sort_rounded,
+                        Icons.logout,
                         color: Colors.white,
-                        size: 35,
+                        size: 30,
                       ),
                     )),
                 Expanded(
@@ -148,7 +148,7 @@ class _inventoryState extends State<inventory> {
                     "https://wallpapercave.com/wp/wp8938666.jpg",
                     "https://e0.pxfuel.com/wallpapers/835/107/desktop-wallpaper-naruto-png-naruto-logo-transparent-transparent-png-logos-naruto-shippuden-logo.jpg",
                     "https://wallpapercave.com/dwp1x/wp9995092.jpg",
-                    "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dw57a9d791/images/6610071781420-7-ultra-tokyo-connection-pvc-scale-figures-demon-slayer-the-movie-mugen-train-akaza-figure-28634102693932.jpg",
+                    "https://i.ebayimg.com/images/g/Xi4AAOSwEPNgaAbk/s-l500.jpg",
                     // Add more image URLs here
                   ].map((imageUrl) {
                     return GestureDetector(

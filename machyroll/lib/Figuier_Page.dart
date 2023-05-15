@@ -15,7 +15,7 @@ class FiguierPage extends StatefulWidget {
 }
 
 class _FiguierPageState extends State<FiguierPage> {
-  int quantity = 0;
+  int quantity = 1;
   late dynamic data;
   CollectionReference figure = FirebaseFirestore.instance.collection('figures');
   Future loadData() async {
@@ -87,8 +87,8 @@ class _FiguierPageState extends State<FiguierPage> {
                               topRight: Radius.circular(30),
                             )),
                         child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: 8, left: 15, right: 15),
+                          padding: const EdgeInsets.only(
+                              top: 8, left: 15, right: 15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -113,7 +113,7 @@ class _FiguierPageState extends State<FiguierPage> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            if (quantity > 1) {
+                                            if (quantity >= 2) {
                                               setState(() {
                                                 quantity--;
                                               });
@@ -126,8 +126,8 @@ class _FiguierPageState extends State<FiguierPage> {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
-                                            child:
-                                                const Icon(CupertinoIcons.minus),
+                                            child: const Icon(
+                                                CupertinoIcons.minus),
                                           ),
                                         ),
                                         Container(
@@ -192,9 +192,11 @@ class _FiguierPageState extends State<FiguierPage> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         "Description:",
@@ -254,7 +256,8 @@ class _FiguierPageState extends State<FiguierPage> {
                                                       color: Colors.red,
                                                       decoration: TextDecoration
                                                           .lineThrough,
-                                                      decorationThickness: 2.0)),
+                                                      decorationThickness:
+                                                          2.0)),
                                             ],
                                           ),
                                           const Text(
@@ -264,64 +267,119 @@ class _FiguierPageState extends State<FiguierPage> {
                                                     255, 248, 13, 13),
                                                 fontSize: 15),
                                           ),
-                                           
-                                                    const Divider(
-                                                      color: Colors.white,
-                                                            ),
+                                          const Divider(
+                                            color: Colors.white,
+                                          ),
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
-                                                  Icon(Icons.local_shipping,
-                                                  size: 20,
-                                                  color: Colors.white,),
-                                                  SizedBox(width: 5,),
-                                                  Text("Delivery:",
-                                                    style: const TextStyle(
+                                                  const Icon(
+                                                    Icons.local_shipping,
+                                                    size: 20,
+                                                    color: Colors.white,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  const Text(
+                                                    "Delivery:",
+                                                    style: TextStyle(
                                                       fontSize: 22,
                                                       color: Colors.white,
-                                                      fontWeight: FontWeight.bold,),),
-                                                      SizedBox(width: 134,),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          Icon(Icons.location_on,size: 20,
-                                                          color: Colors.white,),
-                                                          Text("To El Khroub",style: TextStyle(color: Colors.white),),
-                                                          Icon(Icons.arrow_forward_ios,
-                                                          color: Colors.white,
-                                                          size: 20,)
-                                                        ],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: const [
+                                                      Icon(
+                                                        Icons.location_on,
+                                                        size: 20,
+                                                        color: Colors.white,
+                                                      ),
+                                                      Text(
+                                                        "To El Khroub",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.white,
+                                                        size: 20,
                                                       )
+                                                    ],
+                                                  )
                                                 ],
                                               ),
-                                              SizedBox(height: 5,),
-                                                  Text("Shiping: \$4.64",style: TextStyle(
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              const Text(
+                                                "Shiping: \$4.64",
+                                                style: TextStyle(
                                                     fontSize: 15,
-                                                    color: Colors.white,fontWeight: FontWeight.bold
-                                                  ),),
-                                                  SizedBox(height: 4,),
-                                                  Text("From Kais Khenchela via Yalidine ",style: TextStyle(color: Colors.white),),
-                                                  SizedBox(height: 4,),
-                                                  Text("Estimated delivery: 20-20 days ,item ships within 7 days ",style: TextStyle(color: Colors.white)),
-                                              
-                                              Divider(
-                                                      color: Color.fromARGB(255, 255, 255, 255),),
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              const SizedBox(
+                                                height: 4,
+                                              ),
+                                              const Text(
+                                                "From Kais Khenchela via Yalidine ",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              const SizedBox(
+                                                height: 4,
+                                              ),
+                                              const Text(
+                                                  "Estimated delivery: 20-20 days ,item ships within 7 days ",
+                                                  style: TextStyle(
+                                                      color: Colors.white)),
+                                              const Divider(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255),
+                                              ),
                                               Row(
-                                                children: [
-                                                  Text("Service:",style: TextStyle(
+                                                children: const [
+                                                  Text(
+                                                    "Service:",
+                                                    style: TextStyle(
                                                         fontSize: 22,
-                                                        color: Colors.white,fontWeight: FontWeight.bold
-                                                      ),),
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ],
                                               ),
-                                              SizedBox(height: 5,),
-                                                 Text("3-days Buyer Protection. ",style: TextStyle(color: Colors.white,fontSize: 16),),
-                                                 SizedBox(height: 3,),
-                                                Text("Get a refund if the item arrives late or not as described. ",style: TextStyle(color: Colors.white,fontSize: 10),),
-              
-                                              
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              const Text(
+                                                "3-days Buyer Protection. ",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16),
+                                              ),
+                                              const SizedBox(
+                                                height: 3,
+                                              ),
+                                              const Text(
+                                                "Get a refund if the item arrives late or not as described. ",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10),
+                                              ),
                                             ],
                                           )
                                         ],
@@ -329,159 +387,148 @@ class _FiguierPageState extends State<FiguierPage> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // Button 1 onPressed action
-                                            _openMaps();
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 70),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                            ),
-                                            primary: const Color.fromARGB(
-                                                207, 54, 200, 244),
-                                          ),
-                                          child: const Text(
-                                            ' location  ',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
+                                      const Text(
+                                        "contact Us",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                      const SizedBox(height: 10),
-                                      Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // Button 2 onPressed action
-                                            _sendEmail();
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 70),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                            ),
-                                            primary: Colors.red,
-                                          ),
-                                          child: const Text(
-                                            'E-mail',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // Button 3 onPressed action
-                                            launchTel();
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 70),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                            ),
-                                            primary: Colors.green,
-                                          ),
-                                          child: const Text(
-                                            'Phone',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // Button 4 onPressed action
-                                            launchSms();
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 70),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                            ),
-                                            primary: const Color.fromARGB(
-                                                255, 59, 72, 255),
-                                          ),
-                                          child: const Text(
-                                            ' SMS  ',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
+                                      const SizedBox(
+                                        height: 10,
                                       ),
                                       Row(
-                                      children: [
-                                      Expanded(
-                                       child: Divider(
-                                       color: Colors.white,
-                                       height: 40,
-                                       thickness: 1,
-                                       indent: 10,
-                                      endIndent: 10,
-                                         ),
-                                         ),                            
-                                       Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 10),
-                                        child: Text(
-                                         "Recommendation",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Center(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // Button 1 onPressed action
+                                                _openMaps();
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        207, 54, 200, 244),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                ),
+                                              ),
+                                              child: const Icon(
+                                                Icons.location_on,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Center(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // Button 2 onPressed action
+                                                _sendEmail();
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                backgroundColor: Colors.red,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                              ),
+                                              child: const Icon(Icons.email),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Center(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // Button 3 onPressed action
+                                                launchTel();
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                backgroundColor: Colors.green,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                              ),
+                                              child: const Icon(Icons.phone),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Center(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // Button 4 onPressed action
+                                                launchSms();
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 59, 72, 255),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                              ),
+                                              child: const Icon(Icons.sms),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                          ),
-                                          ),
-                                        Expanded(
-                                        child: Divider(
-                                         color: Colors.white,
-                                        height: 40,
-                                          thickness: 1,
+                                      Row(
+                                        children: const [
+                                          Expanded(
+                                            child: Divider(
+                                              color: Colors.white,
+                                              height: 40,
+                                              thickness: 1,
                                               indent: 10,
-                                        endIndent: 10,
-                                        ),
-                                      ),
-                                            SizedBox(height: 50,)
-
-                                            ],
-                                        )
+                                              endIndent: 10,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Text(
+                                              "Recommendation",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Divider(
+                                              color: Colors.white,
+                                              height: 40,
+                                              thickness: 1,
+                                              indent: 10,
+                                              endIndent: 10,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                          )
+                                        ],
+                                      )
                                     ]),
                               )
-                              
                             ],
-                            
                           ),
-                          
                         ),
-                                              
-
                       ),
-                                            
-
                     ],
                   ),
                 ),
@@ -528,7 +575,7 @@ class _FiguierPageState extends State<FiguierPage> {
                                 width: 5,
                               ),
                               Text(
-                                "Add to Cart",
+                                "Buy Now !",
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 255, 255, 255),
                                   fontWeight: FontWeight.bold,
