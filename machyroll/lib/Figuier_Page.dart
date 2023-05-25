@@ -295,10 +295,11 @@ class _FiguierPageState extends State<FiguierPage> {
                                                           FontWeight.bold,
                                                     ),
                                                   ),
+                                                  SizedBox(width: 130,),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .center,
+                                                            .end,
                                                     children: const [
                                                       Icon(
                                                         Icons.location_on,
